@@ -1,0 +1,51 @@
+<% if (currentUser){ %>                     
+             <input id="chat-user-id" type="hidden" value="<%= currentUser._id %>">      
+             <div class="container"> 
+          <div id='mapid'></div>
+       <script>
+            const center = {lat: 51.509, lng: -0.09};
+            let coords;
+            const map = L.map('mapid').setView(center, 12);
+                 L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+           function onMapClick(e) {
+                 coords = e.latlng;
+                 marker = L.marker(coords);
+                 marker.addTo(map);
+                 foo(coords)
+           }
+           
+           function foo(coord){
+                 $.ajax({
+                 url:'/markers',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {coordinates: JSON.stringify(coord)},
+                 success: function(data, text, jqXHR) {
+                      alert(data);
+                 },
+                 error: function(req, status, error) {
+                      alert(status, error);
+                 }
+            });
+          }
+
+          $.ajax({
+                 url:'/markers',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {coordinates: JSON.stringify(coord)},
+                 success: function(data, text, jqXHR) {
+                      alert(data);
+                 },
+                 error: function(req, status, error) {
+                      alert(status, error);
+                 },
+                 });
+            map.on('click', onMapClick);       
+       </script>  
+</div>
+<% } %>   
+      

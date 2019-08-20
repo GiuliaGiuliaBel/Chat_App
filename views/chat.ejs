@@ -1,0 +1,12 @@
+<% if (currentUser){ %>
+  <div class="col-md-6">   
+  <div id = "joined"></div>
+  </div>
+  <form id="chatForm">                       
+    <input id="chat-input" type="text">  
+      <input id="chat-user-name" type="hidden" value="<%= currentUser.fullName %>">
+      <input id="chat-user-id" type="hidden" value="<%= currentUser._id %>">    
+    <input type="submit" value="Send">
+  </form>
+  <div id="chat"></div>                      
+<% } %>
